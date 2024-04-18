@@ -77,6 +77,10 @@ In the agent security step, select the user you previously created:
 
 <img src=".assets/agent-security.png" />
 
+The replication monitor should display the status as **OK**.
+
+<img src=".assets/replication-monitor-ok.png" />
+
 
 ## Troubleshooting
 
