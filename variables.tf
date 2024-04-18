@@ -38,3 +38,24 @@ variable "vm_image_sku" {
 variable "vm_image_version" {
   type = string
 }
+
+### Azure SQL Database ###
+variable "mssql_sku" {
+  type = string
+}
+
+variable "mssql_max_size_gb" {
+  type = number
+}
+
+variable "mssql_public_network_access_enabled" {
+  type = bool
+}
+
+variable "mssql_admin_login" {
+  type = string
+}
+
+variable "mssql_admin_login_password" {
+  type = string
+}
