@@ -15,25 +15,26 @@ variable "vm_mssql_destination_admin_username" {
 }
 
 variable "vm_mssql_admin_password" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "vm_size" {
   type = string
 }
 
-variable "vm_publisher" {
+variable "vm_image_publisher" {
   type = string
 }
 
-variable "vm_offer" {
+variable "vm_image_offer" {
   type = string
 }
 
-variable "vm_sku" {
+variable "vm_image_sku" {
   type = string
 }
 
-variable "vm_version" {
+variable "vm_image_version" {
   type = string
 }

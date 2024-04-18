@@ -10,11 +10,28 @@ variable "resource_group_name" {
   type = string
 }
 
-variable "subnet" {
+variable "subnet_id" {
   type = string
 }
 
+variable "admin_username" {
+  type = string
+}
+
+variable "admin_password" {
+  type      = string
+  sensitive = true
+}
+
 variable "size" {
+  type = string
+}
+
+variable "image_publisher" {
+  type = string
+}
+
+variable "image_offer" {
   type = string
 }
 
@@ -22,12 +39,6 @@ variable "image_sku" {
   type = string
 }
 
-variable "admin_username" {
-  type      = string
-  sensitive = true
-}
-
-variable "admin_password" {
-  type      = string
-  sensitive = true
+variable "image_version" {
+  type = string
 }
