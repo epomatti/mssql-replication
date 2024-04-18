@@ -35,10 +35,14 @@ variable "public_ip_address_to_allow" {
   type = string
 }
 
-variable "vnet_id" {
+variable "private_endpoints_vnet_id" {
   type = string
 }
 
 variable "private_endpoints_subnet_id" {
+  type = string
+}
+
+variable "source_vnet_id" {
   type = string
 }

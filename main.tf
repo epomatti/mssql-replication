@@ -85,6 +85,7 @@ module "mssql" {
   admin_login                   = var.mssql_admin_login
   admin_login_password          = var.mssql_admin_login_password
 
-  vnet_id                     = module.vnet_private_endpoints.vnet_id
+  private_endpoints_vnet_id   = module.vnet_private_endpoints.vnet_id
   private_endpoints_subnet_id = module.vnet_private_endpoints.subnet_id
+  source_vnet_id              = module.vnet_source.vnet_id
 }
