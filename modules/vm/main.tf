@@ -42,9 +42,9 @@ resource "azurerm_windows_virtual_machine" "default" {
   }
 
   source_image_reference {
-    publisher = "MicrosoftWindowsDesktop"
-    offer     = "Windows-11"
+    publisher = var.image_publisher
+    offer     = var.image_offer
     sku       = var.image_sku
-    version   = "latest"
+    version   = var.image_version
   }
 }
