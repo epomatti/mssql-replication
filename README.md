@@ -28,7 +28,7 @@ If the Replication feature is not selected on installed, it need to be added usi
 
 The installation media should be like this: `C:\SQL2019\Evaluation_ENU`.
 
-Create a new local user with `Administrator` privileges that will be used for the replication agent. In production, check the documentation for a least-privilege approach.
+Create a new local user `mssql-source\sqlagent` with `Administrator` privileges that will be used for the replication agent. In production, check the documentation for a least-privilege approach.
 
 Also, enable [Agent XPs][1] that will be required for replication (check the article version to match the installation version).
 
@@ -36,7 +36,7 @@ Make sure that the agent is running:
 
 <img src=".assets/agent-running.png" />
 
-## Replication
+## Publisher
 
 With the Replication feature enabled, proceed the setup.
 
@@ -81,6 +81,17 @@ The replication monitor should display the status as **OK**.
 
 <img src=".assets/replication-monitor-ok.png" />
 
+## Subscription
+
+https://learn.microsoft.com/en-us/azure/azure-sql/database/replication-to-sql-database?view=azuresql
+
+Add a new Subscriber and follow the wizard steps. Set the Azure SQL database information for the Subscriber. It must use SQL credentials. For the agent security, use the same user created for the distributor.
+
+<img src=".assets/azure-subscriber.png" />
+
+For real-time sync, select `Run continuously`:
+
+<img src=".assets/synchronization.png" />
 
 ## Troubleshooting
 
