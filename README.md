@@ -46,7 +46,7 @@ Make sure that the agent is running:
 
 ## Publisher
 
-With the Replication feature enabled, proceed the setup.
+With the Replication feature enabled, proceed with the Publisher setup.
 
 For testing purposes, the `Publisher` can act as its own `Distributor`.
 
