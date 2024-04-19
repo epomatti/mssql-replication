@@ -152,7 +152,7 @@ The Publication Type for this exercise will be **Transaction publication**.
 
 <img src=".assets/publication-type.png" />
 
-Source
+The source server should use the remote distributor:
 
 <img src=".assets/source-remote-distributor.png" />
 
