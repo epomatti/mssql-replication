@@ -1,5 +1,11 @@
 # Microsoft SQL Server Replication
 
+Transactional replication sandbox for SQL Server to Azure SQL Database.
+
+<img src=".assets/sql-server.png" />
+
+## Setup
+
 Copy the template variables file:
 
 ```sh
