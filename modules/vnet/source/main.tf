@@ -58,6 +58,20 @@ resource "azurerm_network_security_rule" "allow_inbound_sql" {
   network_security_group_name = azurerm_network_security_group.default.name
 }
 
+resource "azurerm_network_security_rule" "allow_inbound_sql_vnet" {
+  name                        = "AllowInboundSQLVnet"
+  priority                    = 120
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "1433"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.default.name
+}
+
 resource "azurerm_network_security_rule" "block_all_inbound" {
   name                        = "DenyAllInbound"
   priority                    = 200
