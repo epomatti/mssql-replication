@@ -62,6 +62,14 @@ resource "azurerm_private_dns_zone_virtual_network_link" "sql_server_source_vnet
   registration_enabled  = true
 }
 
+resource "azurerm_private_dns_zone_virtual_network_link" "sql_server_distributor_vnet" {
+  name                  = "sqlserver-distributor-link"
+  resource_group_name   = var.resource_group_name
+  private_dns_zone_name = azurerm_private_dns_zone.sql_server.name
+  virtual_network_id    = var.distributor_vnet_id
+  registration_enabled  = true
+}
+
 resource "azurerm_private_endpoint" "sql_server" {
   name                = "pe-sqlserver"
   location            = var.location

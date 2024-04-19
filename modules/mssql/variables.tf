@@ -46,3 +46,7 @@ variable "private_endpoints_subnet_id" {
 variable "source_vnet_id" {
   type = string
 }
+
+variable "distributor_vnet_id" {
+  type = string
+}

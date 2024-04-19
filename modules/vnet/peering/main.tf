@@ -25,3 +25,17 @@ resource "azurerm_virtual_network_peering" "private_endpoints_to_source" {
   virtual_network_name      = var.private_endpoints_virtual_network_name
   remote_virtual_network_id = var.source_virtual_network_id
 }
+
+resource "azurerm_virtual_network_peering" "distributor_to_private_endpoints" {
+  name                      = "peer-dist-to-pe"
+  resource_group_name       = var.resource_group_name
+  virtual_network_name      = var.distributor_virtual_network_name
+  remote_virtual_network_id = var.private_endpoints_virtual_network_id
+}
+
+resource "azurerm_virtual_network_peering" "private_endpoints_to_distributor" {
+  name                      = "peer-pe-to-dist"
+  resource_group_name       = var.resource_group_name
+  virtual_network_name      = var.private_endpoints_virtual_network_name
+  remote_virtual_network_id = var.distributor_virtual_network_name
+}

@@ -30,6 +30,14 @@ module "vnet_source" {
   allowed_ip_address  = var.allowed_ip_address
 }
 
+module "vnet_distributor" {
+  source              = "./modules/vnet/distributor"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.default.name
+  allowed_ip_address  = var.allowed_ip_address
+}
+
+# Only if using SQL Server, and not Azure Database
 module "vnet_destination" {
   source              = "./modules/vnet/destination"
   location            = var.location
@@ -50,11 +58,14 @@ module "vnet_peering" {
   source_virtual_network_id   = module.vnet_source.vnet_id
   source_virtual_network_name = module.vnet_source.name
 
-  destination_virtual_network_id   = module.vnet_destination.vnet_id
-  destination_virtual_network_name = module.vnet_destination.name
+  distributor_virtual_network_id   = module.vnet_distributor.vnet_id
+  distributor_virtual_network_name = module.vnet_distributor.name
 
   private_endpoints_virtual_network_id   = module.vnet_private_endpoints.vnet_id
   private_endpoints_virtual_network_name = module.vnet_private_endpoints.name
+
+  destination_virtual_network_id   = module.vnet_destination.vnet_id
+  destination_virtual_network_name = module.vnet_destination.name
 }
 
 
@@ -92,4 +103,5 @@ module "mssql" {
   private_endpoints_vnet_id   = module.vnet_private_endpoints.vnet_id
   private_endpoints_subnet_id = module.vnet_private_endpoints.subnet_id
   source_vnet_id              = module.vnet_source.vnet_id
+  distributor_vnet_id         = module.vnet_distributor.vnet_id
 }
