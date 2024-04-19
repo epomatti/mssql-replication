@@ -1,6 +1,6 @@
 # Microsoft SQL Server Replication
 
-Transactional replication sandbox for SQL Server to Azure SQL Database.
+Transactional replication sandbox from SQL Server to Azure SQL Database.
 
 <img src=".assets/sql-server.png" />
 
