@@ -1,8 +1,6 @@
 # Microsoft SQL Server Replication
 
-Transactional replication sandbox from SQL Server to Azure SQL Database.
-
-The infrastructure template can support multiple architectures:
+Transactional replication sandbox from SQL Server to Azure SQL Database. The infrastructure template can support multiple replication architectures:
 
 ```mermaid
 flowchart LR
