@@ -194,7 +194,20 @@ After setting it up, make sure to confirm the subscriber status is OK in the Rep
 
 ## Troubleshooting
 
+Runtime errors are not always apparent in the SQL explorer experience. Look in monitors, log history and jobs for errors:
+
 <img src=".assets/agent-monitor.png" />
+
+---
+
+### Clean-up
+
+When you're done, destroy the infrastructure:
+
+```sh
+terraform destroy -auto-approve
+```
+
 
 [1]: https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/agent-xps-server-configuration-option?view=sql-server-ver15
 [2]: https://learn.microsoft.com/en-us/sql/relational-databases/replication/distributor?view=sql-server-ver16
