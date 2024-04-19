@@ -87,6 +87,24 @@ module "vm_sqlserver_source" {
   image_version   = var.vm_image_version
 }
 
+module "vm_sqlserver_distributor" {
+  source              = "./modules/vm"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.default.name
+  workload            = "mssql-dist"
+
+  subnet_id = module.vnet_distributor.subnet_id
+  size      = var.vm_size
+
+  admin_username = var.vm_mssql_distributor_admin_username
+  admin_password = var.vm_mssql_admin_password
+
+  image_publisher = var.vm_image_publisher
+  image_offer     = var.vm_image_offer
+  image_sku       = var.vm_image_sku
+  image_version   = var.vm_image_version
+}
+
 module "mssql" {
   source              = "./modules/mssql"
   workload            = "replication"

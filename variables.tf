@@ -10,6 +10,10 @@ variable "vm_mssql_source_admin_username" {
   type = string
 }
 
+variable "vm_mssql_distributor_admin_username" {
+  type = string
+}
+
 variable "vm_mssql_destination_admin_username" {
   type = string
 }
