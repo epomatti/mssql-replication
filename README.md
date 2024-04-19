@@ -24,7 +24,7 @@ Copy the template variables file:
 cp config/template.tfvars .auto.tfvars
 ```
 
-Set your IP address in the `allowed_ip_address` variable.
+👉 Set your IP address in the `allowed_ip_address` variable.
 
 Create the infrastructure:
 
