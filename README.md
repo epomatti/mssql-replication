@@ -12,7 +12,7 @@ flowchart LR
     RD --> VMDB(SQL Server Subscriber)
 ```
 
-The implementation in this repository will focus on a remote Distributor with an Azure SQL Database as the Subscriber:
+The implementation in this repository will focus on a remote Distributor with an Azure SQL Database as the Subscriber, with a private connection via Private Endpoints deployed to a connectivity Virtual Network with DNS integration:
 
 <img src=".assets/sql-server.png" />
 
