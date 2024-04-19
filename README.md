@@ -30,6 +30,8 @@ Select the respective SQL Server version. Evaluation links:
 
 Create a new database to be used for replication. This procedure will use a new database `contosodb`.
 
+Create tables and and insert values to have some sample data. Refer to the [tsql](./tsql/) directory for examples.
+
 If the Replication feature is not selected on installed, it need to be added using **SQL Server Installation Center**.
 
 The installation media should be like this: `C:\SQL2019\Evaluation_ENU`.
