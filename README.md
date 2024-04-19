@@ -28,29 +28,56 @@ Select the respective SQL Server version. Evaluation links:
 - [SQL Server 2022 Evaluation](https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2022)
 - [SQL Server 2019 Evaluation](https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2019)
 
-Create a new database to be used for replication. This procedure will use a new database `contosodb`.
-
-Create tables and and insert values to have some sample data. Refer to the [tsql](./tsql/) directory for examples.
-
-If the Replication feature is not selected on installed, it need to be added using **SQL Server Installation Center**.
+If the Replication feature is not selected on installed, it need to be added using **SQL Server Installation Center**. Make sure to install it to the existing installation if you chose the Basic install option.
 
 The installation media should be like this: `C:\SQL2019\Evaluation_ENU`.
 
-Create a new local user `mssql-source\sqlagent` with `Administrator` privileges that will be used for the replication agent. In production, check the documentation for a least-privilege approach. Make sure to add the login and permissions to the user.
+Create a new local users `<local system>\sqlserver` and `<local system>\sqlagent` with `Administrator` privileges that will be used for the replication agent. In production, check the documentation for a least-privilege approach. Make sure to add the login and permissions to the user.
 
 <img src=".assets/sql-newuser-security.png" />
 
-Also, enable [Agent XPs][1] that will be required for replication (check the article version to match the installation version).
+Setting up the SQL Server **AND** SQL Server Agent user account using the SQL Server Configuration Manager. Apply to restart the service.
+
+<img src=".assets/sql-agent-user.png" />
+
+👉 Also, enable [Agent XPs][1] that will be required for replication (check the article version to match the installation version).
 
 Make sure that the agent is running:
 
 <img src=".assets/agent-running.png" />
 
+## Distributor
+
+The Distributor instance must be set as it's own distributor so it can be used by the Publisher server.
+
+```mermaid
+flowchart LR
+    P(Publisher) --> D(Distributor)
+    D --> S(Subscriber)
+```
+
+Replication must be installed.
+
+Activate SQL Server Agent (Agent XPs).
+
+
+https://learn.microsoft.com/en-us/sql/relational-databases/replication/distributor?view=sql-server-ver16
+https://learn.microsoft.com/en-us/sql/relational-databases/replication/configure-publishing-and-distribution?view=sql-server-ver16
+
+
+<img src=".assets/dist-1.png" />
+<img src=".assets/dist-2.png" />
+<img src=".assets/dist-3.png" />
+
+
+
 ## Publisher
 
 With the Replication feature enabled, proceed with the Publisher setup.
 
-For testing purposes, the `Publisher` can act as its own `Distributor`.
+Create a new database to be used for replication. This procedure will use a new database `contosodb`. Create tables and and insert values to have some sample data. Refer to the [tsql](./tsql/) directory for examples.
+
+The Distributor instance server must have been configured. For simpler setups the `Publisher` can act as its own `Distributor`.
 
 ```mermaid
 flowchart LR
