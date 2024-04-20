@@ -9,3 +9,7 @@ variable "resource_group_name" {
 variable "allowed_ip_address" {
   type = string
 }
+
+variable "private_dns_zone_name" {
+  type = string
+}

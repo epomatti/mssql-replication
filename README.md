@@ -1,6 +1,16 @@
 # Microsoft SQL Server Replication
 
-Transactional replication sandbox from SQL Server to Azure SQL Database. The infrastructure template can support multiple replication architectures:
+Transactional replication sandbox from SQL Server to Azure SQL Database.
+
+The implementation in this repository supports a SQL Server Publisher and a remote Distributor with an Azure SQL Database as the Subscriber. Connectivity with the Azure database uses Private Endpoint:
+
+<img src=".assets/sql-server.png" />
+
+Here's a short demo With a default setup and no optimizations. Replication takes only a few seconds. All Windows Server VMs running on `Standard_B2as_v2` and the SQL Database running on the smallest `Basic` DTU SKU.
+
+<img src=".assets/sqlserver-replica.gif" />
+
+The Terraform infrastructure template can support multiple replication architectures which are supported by MSSQL.
 
 ```mermaid
 flowchart LR
@@ -11,10 +21,6 @@ flowchart LR
     LD --> VMDB(SQL Server VM)
     RD --> VMDB(SQL Server Subscriber)
 ```
-
-The implementation in this repository will focus on a remote Distributor with an Azure SQL Database as the Subscriber, with a private connection via Private Endpoints deployed to a connectivity Virtual Network with DNS integration:
-
-<img src=".assets/sql-server.png" />
 
 ## Infrastructure
 
@@ -35,11 +41,65 @@ terraform apply -auto-approve
 
 Follow the documentation below to configure the SQL Server replication.
 
+## Configuration summary
+
+### Basic setup
+
+Apply this configuration to both Publisher and Distributor servers:
+
+1. Create the infrastructure and connect to the virtual machines.
+2. Install SQL Server and Install [SSMS](https://aka.ms/ssmsfullsetup). Server restart is required.
+3. Add an inbound Windows firewall rule to allow port `1433`.
+4. Create service accounts with `Administrator` privileges (for testing purposes).
+5. Enable TCP/IP protocols for the SQL Server Network Configuration.
+6. Set the SQL Server and SQL Server Agent service accounts. Restart the services.
+7. Install the SQL Server Replication feature.
+8. Execute the TSQL command to configure the Agent XPs.
+8. Enable the Agent XPs. Make sure the agent starts correctly.
+9. Enable `SQL Server and Windows Authentication` mode. Restart the service.
+10. Create SQL instance users for remote SQL Authentication with super admin privileges (for testing purposes). These will be used for replication authentication between Publisher and Distributor.
+11. Set up manual `C:\Windows\System32\drivers\etc\hosts` DNS reference to allow connectivity between the servers:
+    ```ps1
+    # Add to publisher hosts file
+    10.80.0.4   mssql-dist
+
+    # Add to distributor hosts file
+    10.20.0.4   mssql-source
+    ```
+
+It's possible to use the private DNS zone names, but it will require further configuration which is not covered here.
+
+### Replication
+
+Set up the replication between the instances:
+
+1. Set up the Distributor instance to be it's own distributor, and select the Publisher from the origem database server.
+2. Create the database in the Publisher along with the database objects. TSQL examples available here in the [tsql](./tsql) directory.
+3. In the Publisher instance, add a distribution of transactional type. Make sure to use SQL authentication for the Snapshot Agent to connect to the Publisher (this happens locally in the publisher server).
+4. Make sure a connection is established to the Distributor.
+5. Add the Distributor and Publisher to monitor.
+6. Create the Subscription for the Azure SQL Database in the Distributor, referencing the Publisher database.
+
+Later steps are illustrated in the images below. Both Snapshot and Log Reader agents should be running correctly:
+
+<img src=".assets/transaction-delivered.png" />
+
+Additional details can be viewed using the Replication Monitor:
+
+<img src=".assets/monitor-pub-dist.png" />
+
+Once the Subscriber is configured in the Distributor instance, the status can also be administered from the Publisher box:
+
+<img src=".assets/subscription-monitor.png" />
+
+
 ## SQL Server installation
 
 Connect to the source and distributor SQL Server virtual machines.
 
-Download and install the respective SQL Server version. Evaluation links:
+Direct link to SQL Server 2019 Evaluation installation EXE: [2024-09-04](https://go.microsoft.com/fwlink/?linkid=866664&clcid=0x409&culture=en-us&country=us).
+
+Respective updated evaluation links:
 
 - [SQL Server 2022 Evaluation](https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2022)
 - [SQL Server 2019 Evaluation](https://www.microsoft.com/en-us/evalcenter/evaluate-sql-server-2019)
@@ -90,7 +150,7 @@ Create SQL authentication users to allow for:
 
 > 💡 Recommended approach would be two-way domain trust with Integrated Authentication.
 
-<img src=".assets/source_replication.png" />
+<img src=".assets/remote_users.png" />
 
 Allow both **SQL Authentication** and **Windows Authentication** modes:
 

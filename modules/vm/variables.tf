@@ -42,3 +42,11 @@ variable "image_sku" {
 variable "image_version" {
   type = string
 }
+
+variable "private_dns_zone_name" {
+  type = string
+}
+
+variable "private_dns_prefix" {
+  type = string
+}

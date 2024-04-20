@@ -23,18 +23,25 @@ resource "azurerm_resource_group" "default" {
   location = var.location
 }
 
-module "vnet_source" {
-  source              = "./modules/vnet/source"
-  location            = var.location
+resource "azurerm_private_dns_zone" "contoso" {
+  name                = "contoso.sql"
   resource_group_name = azurerm_resource_group.default.name
-  allowed_ip_address  = var.allowed_ip_address
+}
+
+module "vnet_source" {
+  source                = "./modules/vnet/source"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.default.name
+  allowed_ip_address    = var.allowed_ip_address
+  private_dns_zone_name = azurerm_private_dns_zone.contoso.name
 }
 
 module "vnet_distributor" {
-  source              = "./modules/vnet/distributor"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.default.name
-  allowed_ip_address  = var.allowed_ip_address
+  source                = "./modules/vnet/distributor"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.default.name
+  allowed_ip_address    = var.allowed_ip_address
+  private_dns_zone_name = azurerm_private_dns_zone.contoso.name
 }
 
 # Only if using SQL Server, and not Azure Database
@@ -85,6 +92,9 @@ module "vm_sqlserver_source" {
   image_offer     = var.vm_image_offer
   image_sku       = var.vm_image_sku
   image_version   = var.vm_image_version
+
+  private_dns_zone_name = azurerm_private_dns_zone.contoso.name
+  private_dns_prefix    = "publisher"
 }
 
 module "vm_sqlserver_distributor" {
@@ -103,6 +113,9 @@ module "vm_sqlserver_distributor" {
   image_offer     = var.vm_image_offer
   image_sku       = var.vm_image_sku
   image_version   = var.vm_image_version
+
+  private_dns_zone_name = azurerm_private_dns_zone.contoso.name
+  private_dns_prefix    = "distributor"
 }
 
 module "mssql" {

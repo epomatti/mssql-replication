@@ -1,16 +1,19 @@
-USE [contosodb]
-GO
+delete from employee;
 
-INSERT INTO [dbo].[employee]
+DECLARE @i int = 0
+WHILE @i < 1
+BEGIN
+    SET @i = @i + 1
+    INSERT INTO [dbo].[employee]
            ([id]
            ,[name]
            ,[active]
            ,[department]
            ,[date])
      VALUES
-           (1
+           (NEXT VALUE FOR employee_seq
            ,'Evandro'
            ,1
            ,'IT'
            ,GETDATE())
-GO
+END

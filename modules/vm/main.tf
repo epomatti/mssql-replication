@@ -48,3 +48,11 @@ resource "azurerm_windows_virtual_machine" "default" {
     version   = var.image_version
   }
 }
+
+resource "azurerm_private_dns_a_record" "default" {
+  name                = var.private_dns_prefix
+  zone_name           = var.private_dns_zone_name
+  resource_group_name = var.resource_group_name
+  ttl                 = 300
+  records             = [azurerm_network_interface.default.private_ip_address]
+}

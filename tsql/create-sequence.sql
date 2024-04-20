@@ -1,0 +1,3 @@
+CREATE SEQUENCE employee_seq
+  START WITH 1
+  INCREMENT BY 1;

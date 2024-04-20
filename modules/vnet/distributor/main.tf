@@ -12,6 +12,14 @@ resource "azurerm_virtual_network" "default" {
   resource_group_name = var.resource_group_name
 }
 
+resource "azurerm_private_dns_zone_virtual_network_link" "contoso" {
+  name                  = "contoso-distributor"
+  resource_group_name   = var.resource_group_name
+  private_dns_zone_name = var.private_dns_zone_name
+  virtual_network_id    = azurerm_virtual_network.default.id
+  registration_enabled  = false
+}
+
 resource "azurerm_subnet" "default" {
   name                 = "subnet-${local.environment}"
   resource_group_name  = var.resource_group_name
