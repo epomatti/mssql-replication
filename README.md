@@ -6,7 +6,7 @@ The implementation in this repository supports a SQL Server Publisher and a remo
 
 <img src=".assets/sql-server.png" />
 
-Here's a short demo With a default setup and no optimizations. Replication takes only a few seconds. All Windows Server VMs running on `Standard_B2as_v2` and the SQL Database running on the smallest `Basic` DTU SKU.
+Here's a short demo with a default setup and no optimizations. Replication takes only a few seconds. All Windows Server VMs running on `Standard_B2as_v2` and the SQL Database running on the smallest `Basic` DTU SKU.
 
 <img src=".assets/sqlserver-replica.gif" />
 
